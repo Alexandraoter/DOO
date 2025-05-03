@@ -17,7 +17,7 @@ class Server{
         this.app.set('port', process.env.PORT || 3000);
         //Indicar que las solicitudes http se trabajará en JSON
         this.app.use(express.json());
-        this.app.use(cors());
+        this.app.use(cors());// para intercambiar informacion
         /**
          * 
          * ******************Rutas**********************
