@@ -1,5 +1,3 @@
-serverRouter.js
-
 const express = require('express');
 const serverController = require("../controllers/serverController");
 

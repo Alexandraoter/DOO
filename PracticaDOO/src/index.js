@@ -1,34 +1,36 @@
-/* estructura basica */
-const express = require('express')
+const mongoose = require('mongoose');
+const express = require('express');
+const serverRouter = require('./routers/serverRouter');
 
-/* con estas lineas de codigo se esta montando un servidor web con node.js
-el run dev se modifica en el package json  con el comando start  con ese script se abrevia la forma de
-ejecutar las cosas */
-class Server{
-    constructor(){
-    this.app = express();
-    this.app.set('port', process.env.PORT || 3000);
-    this.app.use(express.json());
-    
-    this.app.listen(this.app.get('port'),()=>{
-        console.log("Servidor corriendo por el puerto: ", this.app.get('port'));
-    });
+class Server {
+    constructor() {
+        this.app = express(); 
+        this.app.set('port', process.env.PORT || 3000);
+        this.app.use(express.json()); 
 
-    /* raiz de la ruta */
-    const router = express.Router();
-    router.get('/', (req, res) => {
-        console.log("Nueva conexión");
-        res.status(200).json({message:"Hola mundo"});
-    });
+       
+        const router = express.Router();
 
-    const serverR= new serverRouter.default();  
-    this.app.use(serverR.router);
-    this.app.use(router);
+        router.get('/', (req, res) => {
+            console.log("Nueva conexión");
+            res.status(200).json({ message: "Hola mundo!" });
+        });
+
+        this.app.use('/', router);
+
+       
+        const serverR = new serverRouter.default();
+
+        this.app.use(serverR.router);
+
+        this.app.listen(this.app.get('port'), () => {
+            console.log("Servidor corriendo en el puerto", this.app.get('port'));
+        });
+    }
 }
-}
-   
 
-const objserver = new Server();
+const objServer = new Server();
+
 
 /* CODIGO DEL PROFE//Importar express
 const express = require('express');
